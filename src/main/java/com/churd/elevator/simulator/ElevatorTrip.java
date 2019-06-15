@@ -41,6 +41,8 @@ public class ElevatorTrip implements Callable {
         }
         while (_requestedFloor != _elevator.getCurrentFloor());
 
+        // TODO: after let in the passenger at the requested floor - go to their requested floor (button will be pressed on elevator)
+
         _elevator.addTrip();
         _elevator.setOccupied(false);
 
