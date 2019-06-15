@@ -5,7 +5,6 @@ import com.churd.elevator.simulator.model.ElevatorDirection;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -35,7 +34,7 @@ public class ElevatorController {
     /**
      * Request an unoccupied elevator closest to the requested floor.  If no elevators are unoccupied returns null.
      *
-     * If an elevator is found, starts elevator movement to handle the request in a new thread.
+     * If an elevator is found, starts an elevator trip to handle the request in a new thread.
      *
      * @param requestedFloor
      * @param direction
@@ -44,23 +43,32 @@ public class ElevatorController {
     public Elevator requestUnoccupiedElevator(int requestedFloor, ElevatorDirection direction) {
 
         throw new UnsupportedOperationException();
-        // TODO: Find the unoccupied elevator closest to the requestedFloor
-        // TODO: invoke _startElevatorMovement for that elevator (if any)
+        // TODO: Find the unoccupied (and in service) elevator closest to the requestedFloor
+        // TODO: invoke _startElevatorTrip for that elevator (if any)
     }
 
     /**
-     * Start an elevators movement in a new thread.
+     * Service was completed on an elevator, so mark the elevator as in service.
+     *
+     * @param elevatorId
+     */
+    public void serviceElevator(int elevatorId) {
+        Elevator elevator = _elevatorsById.get(elevatorId);
+        if (null == elevator) {
+            throw new UnsupportedOperationException("Invalid elevator ID: " + elevatorId);
+        }
+        elevator.setInService(false);
+    }
+
+    /**
+     * Start an elevator trip in a new thread.
      *
      * @param requestedFloor
      * @param direction
      */
-    private void _startElevatorMovement(int requestedFloor, ElevatorDirection direction, Elevator elevator) {
+    private void _startElevatorTrip(int requestedFloor, ElevatorDirection direction, Elevator elevator) {
 
-        ElevatorMovement elevatorMovement = new ElevatorMovement(elevator);
+        ElevatorTrip elevatorMovement = new ElevatorTrip(elevator);
         _executorService.submit(elevatorMovement);
-
-        throw new UnsupportedOperationException();
-        // TODO: start an elevator in a new thread
-        // TODO: when an elevator becomes idle notify the controller with an event so that any active call switches can be served
     }
 }

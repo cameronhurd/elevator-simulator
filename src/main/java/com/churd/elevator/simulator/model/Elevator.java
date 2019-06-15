@@ -6,6 +6,9 @@ public class Elevator {
     private final int _id;
     private int _currentFloor = ElevatorConstants.GROUND_FLOOR;
     private boolean _doorOpen = false;
+    private int _tripsMade = 0;
+    private int _floorsPassed = 0;
+    private boolean _inService = true;
 
     public Elevator (int id) {
         _id = id;
@@ -13,6 +16,30 @@ public class Elevator {
 
     public int getId() {
         return _id;
+    }
+
+    public boolean isInService() {
+        return _inService;
+    }
+
+    public void setInService(boolean inService) {
+        _inService = inService;
+    }
+
+    public int getTripsMade() {
+        return _tripsMade;
+    }
+
+    public void setTripsMade(int tripsMade) {
+        _tripsMade = tripsMade;
+    }
+
+    public int getFloorsPassed() {
+        return _floorsPassed;
+    }
+
+    public void setFloorsPassed(int floorsPassed) {
+        _floorsPassed = floorsPassed;
     }
 
     public int getCurrentFloor() {
