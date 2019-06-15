@@ -2,17 +2,26 @@ package com.churd.elevator.simulator.model;
 
 public class CallSwitch {
     private final int _floor;
-    private CallSwitchOption _selectedOption;
+    private boolean _upPressed = false;
+    private boolean _downPressed = false;
 
     public CallSwitch(int floor) {
         _floor = floor;
     }
 
-    public CallSwitchOption getSelectedOption() {
-        return _selectedOption;
+    public boolean isDownPressed() {
+        return _downPressed;
     }
 
-    public void setSelectedOption(CallSwitchOption selectedOption) {
-        _selectedOption = selectedOption;
+    public void setDownPressed(boolean downPressed) {
+        _downPressed = downPressed;
+    }
+
+    public boolean isUpPressed() {
+        return _upPressed;
+    }
+
+    public void setUpPressed(boolean upPressed) {
+        _upPressed = upPressed;
     }
 }
