@@ -1,5 +1,6 @@
 package com.churd.elevator.simulator;
 
+import com.churd.elevator.simulator.model.CallSwitch;
 import com.churd.elevator.simulator.model.Elevator;
 import com.churd.elevator.simulator.model.ElevatorDirection;
 
@@ -14,7 +15,6 @@ public class ElevatorController {
     private final ExecutorService _executorService;
 
     public ElevatorController() {
-        System.out.println("Initializing elevator simulation");
 
         _elevatorsById = new HashMap<>(ElevatorConstants.NUMBER_OF_ELEVATORS);
         for (int elevatorId=0; elevatorId < ElevatorConstants.NUMBER_OF_ELEVATORS; elevatorId++) {

@@ -13,6 +13,11 @@ public class ElevatorSimulator {
     private final Map<Integer, CallSwitch> _callSwitchesByFloor;
 
     public static void main(String[] args) {
+
+        //
+        // TODO: unit tests for each class - skipped tests since primarily design exercise
+        //
+
         ElevatorSimulator simulator =  new ElevatorSimulator();
         try {
             simulator.pressCallSwitch(7, ElevatorDirection.DOWN);
@@ -23,20 +28,16 @@ public class ElevatorSimulator {
     }
 
     public ElevatorSimulator() {
-
-        //
-        // TODO: unit tests for each class - skipped tests since primarily design exercise
-        //
-
         System.out.println("Initializing elevator simulation");
-
-        _elevatorController = new ElevatorController();
 
         _callSwitchesByFloor = new HashMap<>(ElevatorConstants.NUMBER_OF_FLOORS);
         for (int floor=ElevatorConstants.GROUND_FLOOR; floor <= ElevatorConstants.NUMBER_OF_FLOORS; floor++) {
             _callSwitchesByFloor.put(floor, new CallSwitch(floor));
         }
+        CallSwitchLocator.getInstance().setCallSwitchesByFloor(_callSwitchesByFloor);
         System.out.println(_callSwitchesByFloor.size() + " call switches created");
+
+        _elevatorController = new ElevatorController();
     }
 
     /**

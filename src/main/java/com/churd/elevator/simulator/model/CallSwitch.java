@@ -24,4 +24,18 @@ public class CallSwitch {
     public void setUpPressed(boolean upPressed) {
         _upPressed = upPressed;
     }
+
+    public boolean isDirectionPressed(ElevatorDirection direction) {
+        return (ElevatorDirection.UP == direction && isUpPressed()) ||
+                (ElevatorDirection.DOWN == direction && isDownPressed());
+    }
+
+    public void turnOffForDirection(ElevatorDirection direction) {
+        if (ElevatorDirection.UP == direction) {
+            setUpPressed(false);
+        }
+        else if (ElevatorDirection.DOWN == direction) {
+            setDownPressed(false);
+        }
+    }
 }
