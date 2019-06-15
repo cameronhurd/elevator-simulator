@@ -22,30 +22,26 @@ public class ElevatorTrip implements Callable {
         ElevatorDirection direction = _requestedFloor > _elevator.getCurrentFloor() ? ElevatorDirection.UP : ElevatorDirection.DOWN;
         Map<Integer, CallSwitch> callSwitchesByFloor = CallSwitchLocator.getInstance().getCallSwitchesByFloor();
 
-        while (_requestedFloor != _elevator.getCurrentFloor()) {
-
-            _elevator.setCurrentFloor(_elevator.getCurrentFloor() + (direction == ElevatorDirection.UP ? 1 : -1));
+        do {
+            if (_requestedFloor != _elevator.getCurrentFloor()) {
+                _elevator.setCurrentFloor(_elevator.getCurrentFloor() + (direction == ElevatorDirection.UP ? 1 : -1));
+                _elevator.addFloorPassed();
+            }
 
             CallSwitch currentFloorCallSwitch = callSwitchesByFloor.get(_elevator.getCurrentFloor());
             if (null == currentFloorCallSwitch) {
                 throw new UnsupportedOperationException("Invalid floor: " + _elevator.getCurrentFloor());
             }
             else if (currentFloorCallSwitch.isDirectionPressed(direction)) {
-                _elevator.setDoorOpen(true);
-                // TODO: wait with the doors open for some amount of time for occupants to enter
-                _elevator.setDoorOpen(false);
+                _letPassengersIn();
                 currentFloorCallSwitch.turnOffForDirection(direction);
             }
 
             // TODO: allow for additional stops for requested floors (floor buttons inside elevator)
-
-            _elevator.addFloorPassed();
         }
+        while (_requestedFloor != _elevator.getCurrentFloor());
 
-        _elevator.setDoorOpen(true);
-        // TODO: wait with the doors open for some amount of time for occupants to leave
         _elevator.addTrip();
-        _elevator.setDoorOpen(false);
         _elevator.setOccupied(false);
 
         // TODO: if elevator.tripsMade % ElevatorConstants.MAINTENANCE_REQUIRED_AFTER_TRIPS == 0 then put elevator out of service for maintenance
@@ -53,5 +49,16 @@ public class ElevatorTrip implements Callable {
         // TODO: when an elevator becomes idle (end of trip) notify the controller with an event so that any active call switches can be served
 
         throw new UnsupportedOperationException();
+    }
+
+    private void _letPassengersIn() {
+        _elevator.setDoorOpen(true);
+        try {
+            Thread.sleep(ElevatorConstants.DOORS_OPEN_FOR_MS);
+        }
+        catch (InterruptedException ie) {
+            System.out.println("Problem occurred waiting for doors to open: " + ie.getMessage());
+        }
+        _elevator.setDoorOpen(false);
     }
 }

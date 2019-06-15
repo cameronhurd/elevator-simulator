@@ -1,8 +1,6 @@
 package com.churd.elevator.simulator;
 
-import com.churd.elevator.simulator.model.CallSwitch;
 import com.churd.elevator.simulator.model.Elevator;
-import com.churd.elevator.simulator.model.ElevatorDirection;
 
 import java.util.HashMap;
 import java.util.Map;
