@@ -1,0 +1,38 @@
+# OS
+.DS_Store
+[Tt]humbs.db
+[Dd]esktop.ini
+__MACOSX*
+
+# Build/lib
+.buildlog
+.packages/
+.pub/
+build/
+out
+bin/
+bin-debug/
+maven/
+maven-lib/
+packages/
+pubspec.lock
+target/
+
+# Intellij
+*.iml
+.idea/
+
+# Eclipse Flies
+.actionScriptProperties
+.classpath
+.externalToolBuilders/
+.flexProperties
+.project
+.settings/
+.springBeans
+
+# SVN
+.svn/
+
+# VIM
+*.swp
