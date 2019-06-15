@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class ElevatorSimulator {
 
-    Map<Integer, Elevator> _elevatorsById;
+    ElevatorController _elevatorController;
     Map<Integer, CallSwitch> _callSwitchesByFloor;
 
     public static void main(String[] args) {
@@ -21,11 +21,7 @@ public class ElevatorSimulator {
     public ElevatorSimulator() {
         System.out.println("Initializing elevator simulation");
 
-        _elevatorsById = new HashMap<>(ElevatorConstants.NUMBER_OF_ELEVATORS);
-        for (int elevatorId=0; elevatorId < ElevatorConstants.NUMBER_OF_ELEVATORS; elevatorId++) {
-            _elevatorsById.put(elevatorId, new Elevator(elevatorId));
-        }
-        System.out.println(_elevatorsById.size() + " elevators created");
+        _elevatorController = new ElevatorController();
 
         _callSwitchesByFloor = new HashMap<>(ElevatorConstants.NUMBER_OF_FLOORS);
         for (int floor=ElevatorConstants.GROUND_FLOOR; floor <= ElevatorConstants.NUMBER_OF_FLOORS; floor++) {
@@ -34,6 +30,14 @@ public class ElevatorSimulator {
         System.out.println(_callSwitchesByFloor.size() + " call switches created");
     }
 
+    /**
+     * Press the call switch for the provided floor and elevator direction (UP or DOWN).
+     *
+     * Note - assumes synchronized call (wait for method to complete before handling next call switch event)
+     *
+     * @param floor
+     * @param direction
+     */
     public void pressCallSwitch(int floor, ElevatorDirection direction) {
         System.out.println("Call switch pressed for floor: " + floor + ", direction: " + direction);
         CallSwitch callSwitchForFloor = _callSwitchesByFloor.get(floor);
@@ -47,11 +51,13 @@ public class ElevatorSimulator {
         else {
             callSwitchForFloor.setDownPressed(true);
         }
-        // TODO: find elevator
-    }
 
-    public Elevator findUnoccupiedElevator(int floor, ElevatorDirection direction) {
-        throw new UnsupportedOperationException();
-        // TODO: implement
+        Elevator unoccupiedElevator = _elevatorController.requestUnoccupiedElevator(floor, direction);
+        if (null != unoccupiedElevator) {
+            System.out.println("Elevator ID: " + unoccupiedElevator.getId() + " on the way");
+        }
+        else {
+            System.out.println("No unoccupied elevators were found");
+        }
     }
 }
