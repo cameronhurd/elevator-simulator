@@ -5,10 +5,14 @@ import com.churd.elevator.simulator.model.ElevatorDirection;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ElevatorController {
 
-    Map<Integer, Elevator> _elevatorsById;
+    private final Map<Integer, Elevator> _elevatorsById;
+    private final ExecutorService _executorService;
 
     public ElevatorController() {
         System.out.println("Initializing elevator simulation");
@@ -18,6 +22,14 @@ public class ElevatorController {
             _elevatorsById.put(elevatorId, new Elevator(elevatorId));
         }
         System.out.println(_elevatorsById.size() + " elevators created");
+
+        _executorService = Executors.newFixedThreadPool(ElevatorConstants.NUMBER_OF_ELEVATORS);
+    }
+
+    public void destroy() {
+        if (null != _executorService) {
+            _executorService.shutdown();
+        }
     }
 
     /**
@@ -43,6 +55,10 @@ public class ElevatorController {
      * @param direction
      */
     private void _startElevatorMovement(int requestedFloor, ElevatorDirection direction, Elevator elevator) {
+
+        ElevatorMovement elevatorMovement = new ElevatorMovement(elevator);
+        _executorService.submit(elevatorMovement);
+
         throw new UnsupportedOperationException();
         // TODO: start an elevator in a new thread
         // TODO: when an elevator becomes idle notify the controller with an event so that any active call switches can be served

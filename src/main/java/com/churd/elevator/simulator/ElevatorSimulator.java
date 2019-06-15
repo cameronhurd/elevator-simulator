@@ -9,13 +9,17 @@ import java.util.Map;
 
 public class ElevatorSimulator {
 
-    ElevatorController _elevatorController;
-    Map<Integer, CallSwitch> _callSwitchesByFloor;
+    private final ElevatorController _elevatorController;
+    private final Map<Integer, CallSwitch> _callSwitchesByFloor;
 
     public static void main(String[] args) {
-        ElevatorSimulator simulator = new ElevatorSimulator();
-
-        simulator.pressCallSwitch(7, ElevatorDirection.DOWN);
+        ElevatorSimulator simulator =  new ElevatorSimulator();
+        try {
+            simulator.pressCallSwitch(7, ElevatorDirection.DOWN);
+        }
+        finally {
+            simulator.destroy();
+        }
     }
 
     public ElevatorSimulator() {
@@ -58,6 +62,12 @@ public class ElevatorSimulator {
         }
         else {
             System.out.println("No unoccupied elevators were found");
+        }
+    }
+
+    public void destroy() {
+        if (null != _elevatorController) {
+            _elevatorController.destroy();
         }
     }
 }
