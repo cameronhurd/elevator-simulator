@@ -5,6 +5,7 @@ import com.churd.elevator.simulator.ElevatorConstants;
 public class Elevator {
     private final int _id;
     private int _currentFloor = ElevatorConstants.GROUND_FLOOR;
+    private boolean _occupied;
     private boolean _doorOpen = false;
     private int _tripsMade = 0;
     private int _floorsPassed = 0;
@@ -16,6 +17,14 @@ public class Elevator {
 
     public int getId() {
         return _id;
+    }
+
+    public boolean isOccupied() {
+        return _occupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        _occupied = occupied;
     }
 
     public boolean isInService() {
@@ -34,12 +43,20 @@ public class Elevator {
         _tripsMade = tripsMade;
     }
 
+    public void addTrip() {
+        _tripsMade++;
+    }
+
     public int getFloorsPassed() {
         return _floorsPassed;
     }
 
     public void setFloorsPassed(int floorsPassed) {
         _floorsPassed = floorsPassed;
+    }
+
+    public void addFloorPassed() {
+        _floorsPassed++;
     }
 
     public int getCurrentFloor() {

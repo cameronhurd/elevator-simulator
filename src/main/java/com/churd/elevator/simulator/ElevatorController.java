@@ -37,10 +37,9 @@ public class ElevatorController {
      * If an elevator is found, starts an elevator trip to handle the request in a new thread.
      *
      * @param requestedFloor
-     * @param direction
      * @return Elevator object - null if none found
      */
-    public Elevator requestUnoccupiedElevator(int requestedFloor, ElevatorDirection direction) {
+    public Elevator requestUnoccupiedElevator(int requestedFloor) {
 
         throw new UnsupportedOperationException();
         // TODO: Find the unoccupied (and in service) elevator closest to the requestedFloor
@@ -64,11 +63,11 @@ public class ElevatorController {
      * Start an elevator trip in a new thread.
      *
      * @param requestedFloor
-     * @param direction
      */
-    private void _startElevatorTrip(int requestedFloor, ElevatorDirection direction, Elevator elevator) {
+    private void _startElevatorTrip(int requestedFloor, Elevator elevator) {
 
-        ElevatorTrip elevatorMovement = new ElevatorTrip(elevator);
+        elevator.setOccupied(true);
+        ElevatorTrip elevatorMovement = new ElevatorTrip(elevator, requestedFloor);
         _executorService.submit(elevatorMovement);
     }
 }

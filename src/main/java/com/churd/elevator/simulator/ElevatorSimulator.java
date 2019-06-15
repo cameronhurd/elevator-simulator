@@ -23,6 +23,11 @@ public class ElevatorSimulator {
     }
 
     public ElevatorSimulator() {
+
+        //
+        // TODO: unit tests for each class - skipped tests since primarily design exercise
+        //
+
         System.out.println("Initializing elevator simulation");
 
         _elevatorController = new ElevatorController();
@@ -56,7 +61,7 @@ public class ElevatorSimulator {
             callSwitchForFloor.setDownPressed(true);
         }
 
-        Elevator unoccupiedElevator = _elevatorController.requestUnoccupiedElevator(floor, direction);
+        Elevator unoccupiedElevator = _elevatorController.requestUnoccupiedElevator(floor);
         if (null != unoccupiedElevator) {
             System.out.println("Elevator ID: " + unoccupiedElevator.getId() + " on the way");
         }
