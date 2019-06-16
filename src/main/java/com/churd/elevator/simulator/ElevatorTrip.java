@@ -42,13 +42,18 @@ public class ElevatorTrip implements Callable {
         while (_requestedFloor != _elevator.getCurrentFloor());
 
         // TODO: after let in the passenger at the requested floor - go to their requested floor (button will be pressed on elevator)
+        //       this trip should also check call switches as the elevator passes each floor
 
         _elevator.addTrip();
         _elevator.setOccupied(false);
 
         // TODO: if elevator.tripsMade % ElevatorConstants.MAINTENANCE_REQUIRED_AFTER_TRIPS == 0 then put elevator out of service for maintenance
 
-        // TODO: when an elevator becomes idle (end of trip) notify the controller with an event so that any active call switches can be served
+        // TODO: when an elevator becomes idle (end of trip) check for any active call switches that need to be served
+        //       if any found - start a new trip to serve the request
+        //       refactor by creating CallSwitchRequestHandler (Callable) which can span multiple ElevatorTrips to handle above
+
+        // TODO: exception handling - what happens if something goes wrong - at least add logging for elevator failures with elevator details
 
         throw new UnsupportedOperationException();
     }
